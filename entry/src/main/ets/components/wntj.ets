@@ -1,0 +1,65 @@
+import { wntjdata } from '../model/wntjdata'
+@Component
+struct wntj {
+  @Prop obj:wntjdata
+  build(){
+    Row(){
+      Image($r(`app.media.${this.obj.tp}`))
+        .width(95)
+        .height(130)
+        .borderRadius(8)
+      Column({space:5}){
+        Text(this.obj.yc)
+          .lineHeight(20)
+          .fontWeight(FontWeight.Bold)
+        Text(this.obj.yy)
+          .fontColor(0xFFFF6600)
+          .fontSize(12)
+        Text(this.obj.sj)
+          .fontSize(12)
+        Text(this.obj.dd)
+          .fontSize(12)
+          .fontColor(Color.Grey)
+        Row(){
+          Text('条件退')
+            .fontSize(10)
+            .fontColor(Color.Gray)
+            .padding(2)
+            .borderRadius(4)
+            .border({
+              width:0.5,
+              color:Color.Gray,
+              style:BorderStyle.Solid
+            })
+          Row(){
+            Text('￥')
+              .fontSize(10)
+              .fontColor(0xFFFF6600)
+            Text(this.obj.jg)
+              .fontSize(21)
+              .fontWeight(FontWeight.Bold)
+              .fontColor(0xFFFF6600)
+              .margin({top:-5})
+            Text('起')
+              .fontSize(10)
+              .fontColor(Color.Gray)
+          }
+
+        }
+        .width('100%')
+        .justifyContent(FlexAlign.SpaceBetween)
+        .margin({top:8})
+      }
+      .alignItems(HorizontalAlign.Start)
+      .layoutWeight(1)
+      .padding({left:10})
+    }
+    .width('95%')
+    .backgroundColor(Color.White)
+    .height(155)
+    .margin({bottom:8})
+    .borderRadius(8)
+    .padding(14)
+  }
+}
+export default wntj

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(magick -version)",
+      "Bash(ffmpeg -version)",
+      "Bash(cd *)"
+    ]
+  }
+}

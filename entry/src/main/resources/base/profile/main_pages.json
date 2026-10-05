@@ -1,0 +1,16 @@
+{
+  "src": [
+    "pages/SplashPage",
+    "pages/SplashAd",
+    "pages/second",
+    "pages/Index",
+    "pages/third-xg",
+    "pages/dingdan-yuan",
+    "pages/dingdan",
+    "pages/SearchPage",
+    "pages/Login",
+    "pages/gp",
+    "pages/third",
+    "pages/AllCommentPage"
+  ]
+}

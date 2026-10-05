@@ -1,0 +1,517 @@
+import { window } from '@kit.ArkUI';
+import router from '@ohos.router';
+import { SHOW_DETAIL, BOTTOM_ACTIONS, CHENLI_SHOW, BottomAction } from '../model/ShowDetailModel';
+@Entry
+@Component
+
+struct third {
+  // 在页面即将出现时设置全屏和隐藏系统导航栏
+  aboutToAppear() {
+    this.hideSystemNavigationBar();
+  }
+
+  async hideSystemNavigationBar() {
+    try {
+      const win = await window.getLastWindow(getContext(this));
+      // 隐藏状态栏和导航栏（虚拟按键区）
+      win.setWindowSystemBarEnable([]); // 传入空数组表示什么都不显示
+      // 可选：设置为全屏布局（内容延伸到状态栏和导航栏区域）
+      win.setWindowLayoutFullScreen(true);
+    } catch (err) {
+      console.error('隐藏系统导航栏失败：' + JSON.stringify(err));
+    }
+  }
+  build(){
+    Stack({alignContent:Alignment.Bottom}){
+      //1.主体展示区
+      Stack({ alignContent: Alignment.Top }){
+        //头部
+        Row(){
+          Row(){
+            Image($r('app.media.zjt'))
+              .width(33)
+              .height(33)
+              .margin({left:13,top:15})
+              .onClick(()=>{
+                // 1. 执行点击缩放动画（同时完成跳转）
+                animateTo({ duration: 100, curve: Curve.EaseInOut }, () => {
+                  // 模拟点击缩放效果（可选，也可以不加）
+                  // 比如 this.imageScale = 0.9;
+
+                  // 动画执行的同时，直接进行跳转
+                  router.pushUrl({
+                    url:"pages/second"
+                  });
+                });
+              })
+          }
+          Row(){
+            Image($r('app.media.gwc'))
+              .width(33)
+              .height(33)
+              .margin({top:15,right:14})
+            Image($r('app.media.fx'))
+              .width(33)
+              .height(33)
+              .margin({top:15})
+          }
+        }
+        .justifyContent(FlexAlign.SpaceBetween)
+        .padding({right:15})
+        .width('100%')
+        .height(80)
+        .linearGradient({
+          direction:
+          GradientDirection.Bottom,
+          colors:[
+            [0xFFE6D9,0.00],
+            ['#FFFCE3D0',0.45],
+            ['#FFFDF2E0',0.85],
+            ['#FF8F8F8FA',1.0]
+          ]
+        })
+        .zIndex(666)
+        //主体
+        Scroll(){
+          Column(){
+            Column(){
+              //陈粒
+              Row(){
+                Image($r('app.media.cl'))
+                  .borderRadius(8)
+                  .width(100)
+                  .layoutWeight(1)
+                  .margin({left:18,top:18})
+                Column(){
+                    Column(){
+                      Row(){
+                        Image($r('app.media.zpd'))
+                          .width(50)
+                          .height(30)
+                          .margin({right:10})
+                        Text('青岛·2026陈粒【')
+                          .fontSize(17)
+                          .fontWeight(FontWeight.Bold)
+                      }
+                      .margin({ left: 10 ,top:10})
+                      Row(){
+                        Text('一粒】十周年巡回演唱会 - 青岛站')
+                          .fontSize(17)
+                          .fontWeight(FontWeight.Bold)
+                      }
+                      .margin({left:10})
+                    }
+                    .alignItems(HorizontalAlign.Start)
+                    Row(){
+                      Text('￥')
+                        .fontSize(15)
+                        .fontWeight(FontWeight.Medium)
+                      Text(SHOW_DETAIL.priceRange)
+                        .fontSize(25)
+                        .fontWeight(FontWeight.Medium)
+                    }
+                    .margin({top:30,right:80})
+                }
+                .margin({right:10})
+                .layoutWeight(2)
+
+              }
+              .justifyContent(FlexAlign.SpaceBetween)
+              .margin({right:10})
+
+            }
+            .backgroundColor(Color.White)
+            .width('100%')
+            .borderRadius({topLeft:12,topRight:12})
+            .height(160)
+            Column(){
+              Text(SHOW_DETAIL.date)
+                .fontSize(17)
+                .lineHeight(35)
+                .margin({left:10})
+              Text(SHOW_DETAIL.duration)
+                .fontSize(11)
+                .margin({left:10})
+                .fontColor(Color.Gray)
+            }
+            .alignItems(HorizontalAlign.Start)
+            .backgroundColor(Color.White)
+            .width('95%')
+            .height(46)
+            .borderRadius(2)
+            Row(){
+              Row(){
+                Column(){
+                  Text(SHOW_DETAIL.venue)
+                    .fontSize(12)
+                    .fontWeight(FontWeight.Medium)
+                    .lineHeight(35)
+                    .margin({left:10})
+                  Row(){
+                    Text(SHOW_DETAIL.address)
+                      .fontSize(11)
+                      .margin({left:10})
+                      .fontColor(Color.Gray)
+                    Image($r('app.media.yjt'))
+                      .width(12)
+                      .height(12)
+                      .fillColor(Color.Gray)
+                  }
+                }
+                .alignItems(HorizontalAlign.Start)
+                Column(){
+                  Image($r('app.media.zw'))
+                    .width(13)
+                    .height(13)
+                    .margin({top:12,bottom:2})
+                  Text('座位及视野')
+                    .fontSize(9)
+                    .lineHeight(15)
+                    .fontColor(Color.Grey)
+                }
+                .margin({right:10,left:38})
+                Column(){
+                  Image($r('app.media.dt'))
+                    .width(13)
+                    .height(13)
+                    .margin({top:12,bottom:2})
+                  Text('查看地图')
+                    .fontSize(9)
+                    .lineHeight(15)
+                    .fontColor(Color.Grey)
+                }
+              }
+              .backgroundColor(Color.White)
+              .width('95%')
+              .height(60)
+              .borderRadius(2)
+            }
+            .margin({top:1})
+            Row(){
+              Row(){
+                Column(){
+                  Row(){
+                    Row(){
+                      Image($r('app.media.zq'))
+                        .width(10)
+                        .height(10)
+                        .margin({left:10,right:5})
+                      Text('重要通知')
+                        .fontSize(12)
+                    }
+                    Row(){
+                      Image($r('app.media.zy'))
+                        .width(12)
+                        .height(12)
+                        .margin({left:18,right:5})
+                      Text('条件退')
+                        .fontSize(12)
+                    }
+                    Row(){
+                      Image($r('app.media.zq'))
+                        .width(10)
+                        .height(10)
+                        .margin({left:18,right:5})
+                      Text('实名制购票和入场')
+                        .fontSize(12)
+                      Image($r('app.media.zy'))
+                        .width(12)
+                        .height(12)
+                        .margin({left:12,right:5})
+                    }
+                  }
+                  .margin({top:10})
+                  Row(){
+                    Text('预售')
+                      .fontSize(13)
+                      .fontWeight(FontWeight.Bold)
+                      .margin({left:10,top:5})
+                      .fontColor(Color.Gray)
+                    Text('|')
+                      .fontSize(14)
+                      .margin({top:5,left:5,right:5})
+                      .fontColor(Color.Gray)
+                    Text('本商品为预售，正式开票后将第一时间配票')
+                      .fontSize(12)
+                      .fontColor(Color.Gray)
+                      .margin({top:5})
+                  }
+                }
+                .alignItems(HorizontalAlign.Start)
+                Image($r('app.media.yjt'))
+                  .width(15)
+                  .height(15)
+                  .fillColor(Color.Gray)
+                  .margin({right:-1})
+              }
+              .backgroundColor(Color.White)
+              .width('95%')
+              .height(60)
+              .borderRadius({topLeft:2,topRight:2,bottomLeft:8,bottomRight:8})
+            }
+            .margin({top:1})
+            Row(){
+              Column(){
+                Text('抢票攻略')
+                  .fontSize(21)
+                  .fontStyle(FontStyle.Italic)
+                  .fontWeight(FontWeight.Bolder)
+                Text('预选本次实名抢票观演人，抢票快人一步！')
+                  .fontColor(Color.Grey)
+                  .lineHeight(24)
+                  .fontSize(12)
+              }
+
+              .alignItems(HorizontalAlign.Start)
+              .margin(10)
+              Column(){
+                Text('去设置')
+                  .fontSize(12)
+                  .fontWeight(FontWeight.Bold)
+                  .linearGradient({
+                    direction:
+                    GradientDirection.Bottom,
+                    colors:[
+                      ['#FFE8CC',0.0],
+                      ['#FFFCED',1.0]
+                    ]
+                  })
+                  .borderRadius(8)
+                  .padding({left:8})
+                  .width(55)
+                  .height(30)
+                  .border({
+                    width:1
+                  })
+              }
+              .margin({left:5})
+            }
+            .width('95%')
+            .height(70)
+            .borderRadius(8)
+            .margin({top:8,bottom:8})
+            .linearGradient({
+              direction:
+              GradientDirection.Bottom,
+              colors:[
+                ['#FFE8CC',0.0],
+                ['#FFFCED',0.70],
+                [Color.White,0.85],
+                [Color.White,1.0]
+              ]
+            })
+            Row(){
+              Column(){
+                Text('大麦想看')
+                  .fontSize(17)
+                  .fontWeight(FontWeight.Bolder)
+                  .fontStyle(FontStyle.Italic)
+
+                Row(){
+                  Text('12.5')
+                    .fontSize(38)
+                    .fontWeight(FontWeight.Bold)
+                  Text('万人想看')
+                    .fontSize(13)
+                    .margin({top:10,left:5})
+                }
+                .margin({top:9,bottom:5})
+                Text('超过89%同类演出')
+                  .fontSize(11)
+                  .fontColor(Color.Grey)
+              }
+              .margin({left:15})
+              .alignItems(HorizontalAlign.Start)
+              Column(){
+                Row(){
+                  Image($r('app.media.xk'))
+                    .width(13)
+                    .height(13)
+                  Text('想看')
+                    .fontSize(12)
+                    .fontWeight(FontWeight.Bold)
+                    .backgroundColor(Color.White)
+                    .padding({left:5})
+                }
+                .padding({left:5})
+                .width(55)
+                .height(30)
+                .margin({left:105})
+                .borderRadius(8)
+                .border({
+                  width:1
+                })
+              }
+            }
+            .width('95%')
+            .height(120)
+            .borderRadius({topLeft:8,topRight:8,bottomLeft:2,bottomRight:2})
+            .backgroundColor(Color.White)
+            Row(){
+              Row(){
+                Image($r('app.media.b'))
+                  .width(15)
+                  .height(15)
+                  .margin({left:15})
+                Text('演唱会热销榜')
+                  .fontSize(12)
+                  .fontColor(Color.Grey)
+                  .margin({left:8})
+                Text('NO.1')
+                  .fontSize(12)
+                  .fontWeight(FontWeight.Bold)
+                Image($r('app.media.yjt'))
+                  .width(12)
+                  .height(12)
+                  .margin({left:160})
+                  .fillColor(Color.Grey)
+              }
+            }
+            .width('95%')
+            .height(40)
+            .backgroundColor(Color.White)
+            .margin({top:1,bottom:8})
+            .borderRadius({topLeft:2,topRight:2,bottomLeft:8,bottomRight:8})
+            Row(){
+              Image($r('app.media.cl'))
+                .width(48)
+                .height(48)
+                .borderRadius(6)
+                .margin({left:10})
+              Column(){
+                Text('陈粒')
+                  .fontSize(16)
+                  .fontWeight(FontWeight.Medium)
+                Row(){
+                  Text('345.2')
+                    .fontSize(14)
+                    .fontWeight(FontWeight.Bold)
+                  Text('万粉丝  | ')
+                    .fontSize(12)
+                    .fontColor(Color.Grey)
+                  Text(' 6')
+                    .fontSize(14)
+                    .fontWeight(FontWeight.Bold)
+                  Text('场在售演出')
+                    .fontSize(12)
+                    .fontColor(Color.Grey)
+                }
+                .margin({top:8})
+              }
+              .margin({left:10})
+              .alignItems(HorizontalAlign.Start)
+              Row(){
+                Text('+关注')
+                  .fontSize(12)
+                  .fontWeight(FontWeight.Bold)
+                  .backgroundColor(Color.White)
+                  .padding({left:5})
+              }
+              .padding({left:6})
+              .width(55)
+              .height(30)
+              .margin({left:30})
+              .borderRadius(8)
+              .border({
+                width:1
+              })
+            }
+            .width('95%')
+            .height(70)
+            .borderRadius(8)
+            .backgroundColor(Color.White)
+            Column(){
+              Text('演出介绍')
+                .padding(13)
+                .fontWeight(FontWeight.Medium)
+                .width('100%')
+              Image($r('app.media.js1'))
+                .width('100%')
+                .height('auto')
+              Text('2026年6月28日场次预售时间：')
+                .fontSize(14)
+                .margin({left:10,top:10})
+              Text('2026年5月28日13:18分大麦抢先购（抢先购门票数量：1012张')
+                .fontSize(14)
+                .margin({left:10})
+                .lineHeight(28)
+              Text('2026年5月29日13:18分全网预售')
+                .fontSize(14)
+                .margin({left:10,top:5,bottom:10})
+              Image($r('app.media.js2'))
+                .width('100%')
+                .height('auto')
+
+
+            }
+            .alignItems(HorizontalAlign.Start)
+            .margin({top:8})
+            .borderRadius(8)
+            .width('95%')
+            .backgroundColor(Color.White)
+
+          }
+          .margin({top:80,bottom:80})
+        }
+        .scrollBar(BarState.Off)
+      }
+      .width('100%')
+      .height('100%')
+      //底部
+      Row(){
+        ForEach(BOTTOM_ACTIONS, (action: BottomAction, index: number) => {
+          Column(){
+            Image(action.icon)
+              .width(28)
+              .height(28)
+              .margin({ bottom: 2 })
+            Text(action.label)
+              .fontSize(12)
+              .lineHeight(18)
+              .fontColor(Color.Gray)
+          }
+          .layoutWeight(1)
+          .margin({ right: index === 1 ? 10 : 0 })
+        })
+        Text('立即预订')
+          .fontSize(17)
+          .fontWeight(FontWeight.Medium)
+          .fontColor(Color.White)
+          .linearGradient({
+            direction: GradientDirection.RightTop, // 从上到下渐变
+            colors: [
+              ["#FFD700", 0],    // 金黄 起始
+              ["#F27F1B", 0.35],  // 中橘 中间
+              ["#D15A00", 1]     // 深橘 末尾
+            ]
+          })
+          .height(48)
+          .borderRadius(12)
+          .layoutWeight(4)
+          .margin({right:15})
+          .width('100%')
+          .textAlign(TextAlign.Center)
+          .onClick(()=>{
+            // 1. 执行点击缩放动画（同时完成跳转）
+            animateTo({ duration: 100, curve: Curve.EaseInOut }, () => {
+              // 动画执行的同时，直接进行跳转并携带演出购票信息
+              router.pushUrl({
+                url:"pages/gp",
+                params: { showItem: CHENLI_SHOW }
+              });
+            });
+          })
+
+      }
+      .width('100%')
+      .height(80)
+      .backgroundColor(Color.White)
+
+    }
+    .width('100%')
+    .height('100%')
+    .backgroundColor('#FFF7F7F9')
+    .expandSafeArea([SafeAreaType.SYSTEM])
+    .borderRadius(10)
+  }
+}
